@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const hbs = require('express-handlebars');
-const { mongoDbUrl } = require('./config/config');
+const { mongoDbUrl, PORT } = require('./config/config');
 
 const app = express();
 
@@ -28,11 +28,10 @@ app.engine('handlebars', hbs({ defaultLayout: 'default' }));
 app.set('view engine', 'handlebars');
 
 
-// routes
-app.use('/', (req, res) => {
-    res.render('/views/default/index.hbs');
-});
+//routes
+const defaultRoute = require('./routes/default_routes');
+app.use('/', defaultRoute);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port 3000`)
 });
